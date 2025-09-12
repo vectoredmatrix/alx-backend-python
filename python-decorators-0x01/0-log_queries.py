@@ -1,12 +1,16 @@
 import sqlite3 , functools
+from datetime import datetime
 
 
 def log_queries(func):
     def wrapper(*args , **kwargs):
-        pass
+        print(*args)
+        result = func (*args , **kwargs)
+        
+        return result
 
     return wrapper
-
+@log_queries
 def fetch_all_users(query):
     conn = sqlite3.connect("testdb.sqlite3")
     cursor = conn.cursor()
