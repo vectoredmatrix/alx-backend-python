@@ -2,20 +2,22 @@ import asyncio
 import aiosqlite
 
 
-async def async_fetch_users(db="" , query = "" , param =()):
+async def async_fetch_users():
     
-    async with aiosqlite.connect(db) as conn:
-        async with conn.execute(query , param) as cursor:
+    async with aiosqlite.connect("testdb.sqlite3") as conn:
+        async with conn.execute( 
+       "SELECT * FROM Users ;"
+   ) as cursor:
            row = await cursor.fetchall()
            
            return row
        
        
 
-async def async_fetch_older_users(db = "" , query ="" , params = ()):
+async def async_fetch_older_users():
    
-    async with (aiosqlite.connect(db)) as conn:
-        async with conn.execute(query , params) as cursor:
+    async with (aiosqlite.connect("testdb.sqlite3")) as conn:
+        async with conn.execute( "SELECT * FROM Users WHERE age > ?;" , (40,)) as cursor:
             row = await cursor.fetchall()
             
             return row
@@ -25,11 +27,8 @@ async def async_fetch_older_users(db = "" , query ="" , params = ()):
        
 
 async def fetch_concurrently():
-   r = await asyncio.gather(async_fetch_users(
-       "testdb.sqlite3" , 
-       "SELECT * FROM Users ;"
-   ),
-    async_fetch_older_users("testdb.sqlite3" , "SELECT * FROM Users WHERE age > ?;" , (40,)))
+   r = await asyncio.gather(async_fetch_users(),
+    async_fetch_older_users())
    print(r)
    
    
