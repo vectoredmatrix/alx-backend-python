@@ -2,7 +2,7 @@ import asyncio
 import aiosqlite
 
 
-async def async_fetch_user_USER(db="" , query = "" , param =()):
+async def async_fetch_users(db="" , query = "" , param =()):
     
     async with aiosqlite.connect(db) as conn:
         async with conn.execute(query , param) as cursor:
@@ -12,7 +12,7 @@ async def async_fetch_user_USER(db="" , query = "" , param =()):
        
        
 
-async def async_fetch_older_user(db = "" , query ="" , params = ()):
+async def async_fetch_older_users(db = "" , query ="" , params = ()):
    
     async with (aiosqlite.connect(db)) as conn:
         async with conn.execute(query , params) as cursor:
@@ -25,11 +25,11 @@ async def async_fetch_older_user(db = "" , query ="" , params = ()):
        
 
 async def fetch_concurrently():
-   r = await asyncio.gather(async_fetch_user_USER(
+   r = await asyncio.gather(async_fetch_users(
        "testdb.sqlite3" , 
        "SELECT * FROM Users ;"
    ),
-    async_fetch_older_user("testdb.sqlite3" , "SELECT * FROM Users WHERE age > ?;" , (40,)))
+    async_fetch_older_users("testdb.sqlite3" , "SELECT * FROM Users WHERE age > ?;" , (40,)))
    print(r)
    
    
