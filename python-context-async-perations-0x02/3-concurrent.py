@@ -15,9 +15,9 @@ async def fetch_older_user(db = "" , query ="" , params = ()):
    
     async with (aiosqlite.connect(db)) as conn:
         async with conn.execute(query , params) as cursor:
-            result = await cursor.fetchall()
+            row = await cursor.fetchall()
             
-            return result
+            return row
        
        
        
