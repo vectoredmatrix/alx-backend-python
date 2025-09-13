@@ -18,5 +18,5 @@ class ExecuteQuery:
 #s = ExecuteQuery("m")
 
 with ExecuteQuery("testdb.sqlite3") as cursor:
-    r =  cursor.execute("SELECT * FROM users WHERE age > ?" , (25,))
+    r =  cursor.execute("SELECT * FROM users WHERE age ")
     print(r.fetchall())
