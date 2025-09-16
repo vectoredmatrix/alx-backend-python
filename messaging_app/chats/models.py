@@ -1,5 +1,6 @@
 from django.db import models
 from uuid import uuid4
+from django.contrib.auth.models import AbstractUser 
 # Create your models here.
 """
 class Basemodel(models.Model):
@@ -11,7 +12,7 @@ class Basemodel(models.Model):
         
 """     
         
-class User(models.Model):
+class User(AbstractUser):
     
     class Role(models.TextChoices):
         GUEST = "GUEST" , "GUEST"
@@ -20,12 +21,12 @@ class User(models.Model):
         
         
     user_id = models.UUIDField(primary_key=True , default=uuid4 , editable=False)
-    first_name = models.CharField(max_length=50 , blank=False)
-    last_name = models.CharField(max_length=50 , blank=False)
-    email = models.EmailField(unique=True , max_length=100 , blank=False)
+    #first_name = models.CharField(max_length=50 , blank=False)
+    #last_name = models.CharField(max_length=50 , blank=False)
+    #email = models.EmailField(unique=True , max_length=100 , blank=False)
     phone_number = models.CharField(max_length=25 , blank=True)
     role = models.CharField(choices= Role.choices)
-    
+    #password = models.CharField(max_length=200 , blank=False)
     created_at = models.DateTimeField(auto_created=True)
     
     
@@ -40,6 +41,6 @@ class Message(models.Model):
 class Conversation(models.Model) :
     conversation_id = models.UUIDField(primary_key=True , default=uuid4 , editable=False)
     participants_id = models.ForeignKey(User , related_name="conversions" , on_delete=models.CASCADE)
-    password_hash = models.CharField(max_length=200 , blank=False)
+   
     created_at = models.DateTimeField(auto_now_add= True)
     
