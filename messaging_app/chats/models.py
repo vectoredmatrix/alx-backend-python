@@ -39,7 +39,7 @@ class Message(models.Model):
     
     
 class Conversation(models.Model) :
-    conversation_id = models.UUIDField(primary_key=True , default=uuid4 , editable=False)
+    conversaion_id = models.UUIDField(primary_key=True , default=uuid4 , editable=False)
     participants_id = models.ForeignKey(User , related_name="conversions" , on_delete=models.CASCADE)
    
     created_at = models.DateTimeField(auto_now_add= True)
