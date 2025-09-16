@@ -37,8 +37,8 @@ class Message(models.Model):
     sent_at = models.DateTimeField(auto_now_add=True)
     
     
-class Conversaion(models.Model) :
-    conversaion_id = models.UUIDField(primary_key=True , default=uuid4 , editable=False)
+class Conversation(models.Model) :
+    conversation_id = models.UUIDField(primary_key=True , default=uuid4 , editable=False)
     participants_id = models.ForeignKey(User , related_name="conversions" , on_delete=models.CASCADE)
     password_hash = models.CharField(max_length=200 , blank=False)
     created_at = models.DateTimeField(auto_now_add= True)
