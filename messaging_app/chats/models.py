@@ -40,6 +40,6 @@ class Message(models.Model):
 class Conversaion(models.Model) :
     conversaion_id = models.UUIDField(primary_key=True , default=uuid4 , editable=False)
     participants_id = models.ForeignKey(User , related_name="conversions" , on_delete=models.CASCADE)
-    password = models.CharField(max_length=200 , blank=False)
+    password_hash = models.CharField(max_length=200 , blank=False)
     created_at = models.DateTimeField(auto_now_add= True)
     
