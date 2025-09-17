@@ -2,22 +2,26 @@ from .models import *
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password 
 
-class Users (serializers.ModelSerializer):
+class UserSerial (serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only = True)
-    # the above confirm_password was not fully implemented
+    
     class Meta:
         model = User
         fields = "__all__"
         extra_kwargs ={"password" :{"write_only":True}}
+       
+    
+    def validate(self, attrs):
+        if attrs["password"] != attrs["confirm_password"]:
+            raise serializers.ValidationError("Password does not match")
         
+        attrs.pop("confirm_password")
+        return super().validate(attrs) 
     
     def create(self , validated_data):
         password = validated_data.get("password")
         validated_data["password"] = make_password(password)
-        # user = User(**validated_data)
-        
-        #user.set_password(password)
-        #user.save()
+       
         return super().create(validated_data)
     
     
@@ -29,7 +33,7 @@ class MessageSerial(serializers.ModelSerializer):
         fields = ["message_id" , "message_body","sent_at" ,"sender_id"]
     
     def validate_message_body(self , body):
-       if len(body.strip ==0):
+       if len(body.strip())==0:
            raise serializers.ValidationError("Message body can not be empty")
        
        return body  
@@ -40,7 +44,7 @@ class ConvsersationSerial(serializers.ModelSerializer):
     participant_id = serializers.PrimaryKeyRelatedField(queryset = User.objects.all() , source = "participant_id" , write_only = True)
     
     
-    class Mata:
+    class Meta:
         model = Conversation
         fields = ["conversation_id" , "created_at" , "participant" , "participant_id"]
     
@@ -48,7 +52,7 @@ class ConvsersationSerial(serializers.ModelSerializer):
         
         fullname = obj.participant_id.first_name + " " +obj.participant_id.last_name
 
-        return fullname        
+        return fullname.strip()        
 
 
 
