@@ -1,15 +1,15 @@
-from rest_framework.routers import DefaultRouter
+from rest_framework import routers
 from .views import *
-from django.urls import include
+from django.urls import include ,path
 
 app_name = "chats"
 
-route = DefaultRouter()
+router = routers.DefaultRouter()
 
-route.register("conversation" , ConversationViewset , basename=ConversationViewset.name)
-route.register("message" , MessageViewSet , basename=MessageViewSet.http_method_names)
+router.register("conversation" , ConversationViewset , basename=ConversationViewset.name)
+router.register("message" , MessageViewSet , basename=MessageViewSet.http_method_names)
 
 urlpatterns = [
-    "" , include("route.urls")
+    path("" , include("router.urls"))
     
 ]
