@@ -3,6 +3,8 @@ from rest_framework import serializers
 from django.contrib.auth.hashers import make_password 
 
 class Users (serializers.ModelSerializer):
+    confirm_password = serializers.CharField(write_only = True)
+    # the above confirm_password was not fully implemented
     class Meta:
         model = User
         fields = "__all__"
@@ -25,17 +27,28 @@ class MessageSerial(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ["message_id" , "message_body","sent_at" ,"sender_id"]
+    
+    def validate_message_body(self , body):
+       if len(body.strip ==0):
+           raise serializers.ValidationError("Message body can not be empty")
+       
+       return body  
 
 
-class ConvsersionSerial(serializers.ModelSerializer):
-    participant = User(read_only = True , source = "participant_id")
+class ConvsersationSerial(serializers.ModelSerializer):
+    participant = serializers.SerializerMethodField()
     participant_id = serializers.PrimaryKeyRelatedField(queryset = User.objects.all() , source = "participant_id" , write_only = True)
     
     
     class Mata:
         model = Conversation
         fields = ["conversation_id" , "created_at" , "participant" , "participant_id"]
+    
+    def get_participant(self , obj):
         
+        fullname = obj.participant_id.first_name + " " +obj.participant_id.last_name
+
+        return fullname        
 
 
 
