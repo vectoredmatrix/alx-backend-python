@@ -25,9 +25,9 @@ class User(AbstractUser):
     #last_name = models.CharField(max_length=50 , blank=False)
     #email = models.EmailField(unique=True , max_length=100 , blank=False)
     phone_number = models.CharField(max_length=25 , blank=True)
-    role = models.CharField(choices= Role.choices)
+    role = models.CharField(choices= Role.choices , max_length=10) 
     #password = models.CharField(max_length=200 , blank=False)
-    created_at = models.DateTimeField(auto_created=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
     
     
@@ -40,7 +40,7 @@ class Message(models.Model):
     
 class Conversation(models.Model) :
     conversation_id = models.UUIDField(primary_key=True , default=uuid4 , editable=False)
-    participants_id = models.ForeignKey(User , related_name="conversions" , on_delete=models.CASCADE)
+    participants_id = models.ManyToManyField(User , related_name="conversations" )
    
     created_at = models.DateTimeField(auto_now_add= True)
     

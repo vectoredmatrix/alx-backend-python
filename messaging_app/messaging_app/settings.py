@@ -24,12 +24,14 @@ SECRET_KEY = 'django-insecure-jd!%vh9h!y3rvlpu)bcz683a$22e_%-kc^^s_ot^w@#&4uv&cn
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+AUTH_USER_MODEL = "chats.User"
+
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
-my_app = [ "celery"]
+my_app = [ "celery" , "chats",'drf_yasg']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
