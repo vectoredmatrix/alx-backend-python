@@ -6,7 +6,7 @@ app_name = "chats"
 
 router = routers.DefaultRouter()
 
-router.register("conversation" , ConversationViewset , basename=ConversationViewset.name)
+router.register("conversation" , ConversationViewSet , basename=ConversationViewSet.name)
 router.register("message" , MessageViewSet , basename=MessageViewSet.http_method_names)
 
 urlpatterns = [

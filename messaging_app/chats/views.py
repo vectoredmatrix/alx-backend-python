@@ -31,6 +31,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerial
     name = "MessageViewSet"  
     filter_backends = [filters.SearchFilter]
+    search_fields = ["message_body"]
     
     def create(self, request, *args, **kwargs):
         
