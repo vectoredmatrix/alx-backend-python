@@ -33,6 +33,20 @@ class MessageViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ["message_body"]
     
+    
+    
+    def get_queryset(self):
+        
+        conversation_id = self.kwargs["conversation_pk"]
+        
+        if conversation_id:
+            return Message.objects.filter(conversation_id = conversation_id)
+        
+          
+        return super().get_queryset()
+            
+    
+    
     def create(self, request, *args, **kwargs):
         
         serial = self.get_serializer(request.data)
