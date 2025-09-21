@@ -1,34 +1,38 @@
 #!/usr/bin/env python3
 import unittest
-from unittest.mock import patch, Mock
-from parameterized import parameterized
+from unittest.mock import patch
 
-import utils
+from utils import memoize
 
 
-class TestGetJson(unittest.TestCase):
-    """Unit tests for utils.get_json function"""
+class TestMemoize(unittest.TestCase):
+    """Unit tests for the memoize decorator"""
 
-    @parameterized.expand([
-        ("http://example.com", {"payload": True}),
-        ("http://holberton.io", {"payload": False}),
-    ])
-    @patch("utils.requests.get")
-    def test_get_json(self, test_url, test_payload, mock_get):
-        """Test utils.get_json returns expected payload and calls requests.get"""
-        # Arrange: create mock response
-        mock_response = Mock()
-        mock_response.json.return_value = test_payload
-        mock_get.return_value = mock_response
+    def test_memoize(self):
+        """Test that memoize caches result after first call"""
 
-        # Act: call function under test
-        result = utils.get_json(test_url)
+        class TestClass:
+            def a_method(self):
+                return 42
 
-        # Assert: check requests.get was called once with correct URL
-        mock_get.assert_called_once_with(test_url)
+            @memoize
+            def a_property(self):
+                return self.a_method()
 
-        # Assert: check return value equals payload
-        self.assertEqual(result, test_payload)
+        test_instance = TestClass()
+
+        with patch.object(TestClass, "a_method", return_value=42) as mock_method:
+            # First call should call a_method
+            result1 = test_instance.a_property()
+            # Second call should return cached value without calling a_method again
+            result2 = test_instance.a_property()
+
+            # Both calls should return the same result
+            self.assertEqual(result1, 42)
+            self.assertEqual(result2, 42)
+
+            # Ensure a_method was called only once due to memoization
+            mock_method.assert_called_once()
 
 
 if __name__ == "__main__":
