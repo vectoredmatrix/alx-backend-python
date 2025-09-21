@@ -60,7 +60,7 @@ class TestGetJson(unittest.TestCase):
         mock_response.json.return_value = test_payload
 
         with patch(
-                "utils.requests.get", 
+                "utils.requests.get",
                 return_value=mock_response
         ) as mock_get:
             result = get_json(test_url)
