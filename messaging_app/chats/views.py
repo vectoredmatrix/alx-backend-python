@@ -37,7 +37,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         
-        conversation_id = self.kwargs["conversation_pk"]
+        conversation_id = self.kwargs.get("conversation_pk",None)
         
         if conversation_id:
             return Message.objects.filter(conversation_id = conversation_id)
@@ -49,7 +49,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     
     def create(self, request, *args, **kwargs):
         
-        serial = self.get_serializer(request.data)
+        serial = self.get_serializer(data =request.data)
         
         if serial.is_valid():
             self.perform_create(serial)
