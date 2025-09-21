@@ -38,7 +38,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             return mock_resp
 
         cls.mock_get.side_effect = side_effect
- 
+
     @classmethod
     def tearDownClass(cls):
         """Stop the patcher"""
@@ -51,7 +51,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.assertEqual(repos, self.expected_repos)
 
     def test_public_repos_with_license(self):
-        """Test filtering of repos by license"""
+        """Test filtering of repos by license='apache-2.0'"""
         client = GithubOrgClient("octocat")
         repos = client.public_repos(license="apache-2.0")
         self.assertEqual(repos, self.apache2_repos)
