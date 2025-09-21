@@ -12,7 +12,7 @@ import unittest
 from parameterized import parameterized
 from unittest.mock import patch, Mock
 
-from utils import access_nested_map 
+from utils import access_nested_map
 from utils import get_json, memoize
 
 
