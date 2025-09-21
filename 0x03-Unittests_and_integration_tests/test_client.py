@@ -1,26 +1,57 @@
 #!/usr/bin/env python3
 """
-Unit tests for client.GithubOrgClient.has_license
+Integration tests for GithubOrgClient.public_repos
 """
 
 import unittest
-from parameterized import parameterized
+from unittest.mock import patch, Mock
+from parameterized import parameterized_class
 from client import GithubOrgClient
+from fixtures import org_payload, repos_payload, expected_repos, apache2_repos
 
 
-class TestGithubOrgClient(unittest.TestCase):
-    """Test GithubOrgClient.has_license method"""
+@parameterized_class([
+    {
+        "org_payload": org_payload,
+        "repos_payload": repos_payload,
+        "expected_repos": expected_repos,
+        "apache2_repos": apache2_repos
+    }
+])
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integration tests for GithubOrgClient.public_repos"""
 
-    @parameterized.expand([
-        ({"license": {"key": "my_license"}}, "my_license", True),
-        ({"license": {"key": "other_license"}}, "my_license", False),
-    ])
-    def test_has_license(self, repo, license_key, expected):
-        """Test has_license returns correct boolean value"""
-        client = GithubOrgClient("org_name")
-        result = client.has_license(repo, license_key)
-        self.assertEqual(result, expected)
+    @classmethod
+    def setUpClass(cls):
+        """Set up class with mocked requests.get for integration test"""
+        cls.get_patcher = patch("client.requests.get")
+        cls.mock_get = cls.get_patcher.start()
 
+        def side_effect(url, *args, **kwargs):
+            mock_resp = Mock()
+            if url.endswith("/orgs/octocat"):
+                mock_resp.json.return_value = cls.org_payload
+            elif url.endswith("/orgs/octocat/repos"):
+                mock_resp.json.return_value = cls.repos_payload
+            else:
+                mock_resp.json.return_value = {}
+            return mock_resp
 
-if __name__ == "__main__":
-    unittest.main()
+        cls.mock_get.side_effect = side_effect
+
+    @classmethod
+    def tearDownClass(cls):
+        """Stop the patcher"""
+        cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        """Test that public_repos returns the expected repo list"""
+        client = GithubOrgClient("octocat")
+        repos = client.public_repos()
+        self.assertEqual(repos, self.expected_repos)
+
+    def test_public_repos_with_license(self):
+        """Test filtering of repos by license"""
+        client = GithubOrgClient("octocat")
+        repos = client.public_repos(license="apache-2.0")
+        self.assertEqual(repos, self.apache2_repos)
