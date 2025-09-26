@@ -3,6 +3,7 @@ from rest_framework import viewsets , filters , status
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
+from .permissions import IsParticipantOfConversation
 
 
 # Create your views here.
@@ -14,6 +15,9 @@ class ConversationViewSet(viewsets.ModelViewSet):
     name = "ConversationViewset"
     filter_backends = [filters.SearchFilter]
     search_fields =  ["particapant__first_name","participant__lanst_name"]
+    parser_classes = [IsParticipantOfConversation]
+    
+    
     
     def create(self, request, *args, **kwargs):
         
