@@ -1,7 +1,6 @@
-from rest_framework.permissions import BasePermission
+from rest_framework import permissions
 
-
-class IsParticipantOfConversation(BasePermission):
+class IsParticipantOfConversation(permissions.BasePermission):
     
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated
@@ -11,7 +10,7 @@ class IsParticipantOfConversation(BasePermission):
         return obj.participants_id == request.user
     
     
-class IsSenderOfMessage(BasePermission):
+class IsSenderOfMessage(permissions.BasePermission):
     
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated
