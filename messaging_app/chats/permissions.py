@@ -4,11 +4,19 @@ from rest_framework.permissions import BasePermission
 class IsParticipantOfConversation(BasePermission):
     
     def has_permission(self, request, view):
-        return True
+        return request.user and request.user.is_authenticated
     
     def has_object_permission(self, request, view, obj):
-        if request.method in ("GET","HEAD" ,"OPTIONS"):
-            return True
+       
+        return obj.participants_id == request.user
+    
+    
+class IsSenderOfMessage(BasePermission):
+    
+    def has_permission(self, request, view):
+        return request.user and request.user.is_authenticated
+    
+    def has_object_permission(self, request, view, obj):
         
-        return obj.owner == request.user
+        return obj.sender_id == request.user
     

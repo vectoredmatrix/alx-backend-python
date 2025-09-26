@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "rest_framework" 
+    "rest_framework" ,
+     
 ] + my_app
 
 
@@ -51,7 +52,8 @@ REST_FRAMEWORK = {
     
      'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',  # optional
+        'rest_framework.authentication.BasicAuthentication', 
+        'rest_framework_simplejwt.authentication.JWTAuthentication',# optional
         # 'rest_framework.authentication.TokenAuthentication', # if using tokens
     ],
 }
