@@ -41,16 +41,15 @@ class MessageSerial(serializers.ModelSerializer):
 
 class ConvsersationSerial(serializers.ModelSerializer):
     participant = serializers.SerializerMethodField()
-    participant_id = serializers.PrimaryKeyRelatedField(queryset = User.objects.all() , source = "participant_id" , write_only = True)
+    #participant_id = serializers.PrimaryKeyRelatedField(queryset = User.objects.all()  , write_only = True)
     
     
     class Meta:
         model = Conversation
-        fields = ["conversation_id" , "created_at" , "participant" , "participant_id"]
-    
+        fields = "__all__"
     def get_participant(self , obj):
         
-        fullname = obj.participant_id.first_name + " " +obj.participant_id.last_name
+        fullname = obj.participants_id.username
 
         return fullname.strip()        
 

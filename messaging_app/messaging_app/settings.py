@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-my_app = [ "celery" , "chats",'drf_yasg']
+my_app = [ "celery" , "chats",'drf_yasg', 'django_filters']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,11 +52,15 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated' ],
     
      'DEFAULT_AUTHENTICATION_CLASSES': [
-          "chat.auth.CustomAPI",
+          "chats.auth.CustomAPI",
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication', 
         'rest_framework_simplejwt.authentication.JWTAuthentication',# optional
         # 'rest_framework.authentication.TokenAuthentication', # if using tokens
+    ],
+     'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        
     ],
 }
 

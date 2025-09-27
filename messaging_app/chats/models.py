@@ -29,7 +29,8 @@ class User(AbstractUser):
     #password = models.CharField(max_length=200 , blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     
-    
+    def __str__(self):
+        return self.username
     
 class Message(models.Model):
     message_id = models.UUIDField(editable=False , primary_key=True , default=uuid4)

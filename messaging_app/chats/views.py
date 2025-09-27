@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
 from .permissions import IsParticipantOfConversation , IsSenderOfMessage
-
+from .filters import MessageFilter
 
 # Create your views here.
 
@@ -38,6 +38,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ["message_body"]
     permission_classes = [IsSenderOfMessage]
+    filterset_class = [MessageFilter]
     
     
     
