@@ -27,7 +27,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
             self.perform_create(serial)
             return Response({"Status":"success" , "data":serial.data} , status=status.HTTP_201_CREATED)
         
-        return Response({"status":"Error" ,"Error":serial.errors } , status=status.HTTP_400_BAD_REQUEST)
+        return Response({"status":"Error" ,"Error":serial.errors } , status=status.HTTP_403_FORBIDDEN)
             
     
 
@@ -64,4 +64,4 @@ class MessageViewSet(viewsets.ModelViewSet):
                 "status":"Success" , "data":serial.data
             }, status=status.HTTP_201_CREATED) 
             
-        return Response({"status": "error" , "Error":serial.errors} , status=status.HTTP_400_BAD_REQUEST)
+        return Response({"status": "error" , "Error":serial.errors} , status=status.HTTP_403_FORBIDDEN)
