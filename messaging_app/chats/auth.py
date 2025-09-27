@@ -27,7 +27,7 @@ class CustomAPI(authentication.BaseAuthentication):
             return None
         
         try:
-            user = User.objects.get(user_id = key)
+            user = User.objects.get(id = key)
         
         except ValueError:
             raise AuthenticationFailed("Invalid User Key")

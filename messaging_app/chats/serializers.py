@@ -41,7 +41,7 @@ class MessageSerial(serializers.ModelSerializer):
 
 class ConvsersationSerial(serializers.ModelSerializer):
     participant = serializers.SerializerMethodField()
-    #participant_id = serializers.PrimaryKeyRelatedField(queryset = User.objects.all()  , write_only = True)
+    participant_id = serializers.PrimaryKeyRelatedField(queryset = User.objects.all()  , write_only = True)
     
     
     class Meta:
@@ -49,9 +49,7 @@ class ConvsersationSerial(serializers.ModelSerializer):
         fields = "__all__"
     def get_participant(self , obj):
         
-        fullname = obj.participants_id.username
-
-        return fullname.strip()        
+        return [user.username for user in obj.participants_id.all()]     
 
 
 
