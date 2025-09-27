@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework import viewsets , filters , status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
-from .permissions import IsParticipantOfConversation
+from .permissions import IsParticipantOfConversation , IsSenderOfMessage
 
 
 # Create your views here.
@@ -15,7 +16,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
     name = "ConversationViewset"
     filter_backends = [filters.SearchFilter]
     search_fields =  ["particapant__first_name","participant__lanst_name"]
-    parser_classes = [IsParticipantOfConversation]
+    parser_classes = [IsParticipantOfConversation , IsAuthenticated]
     
     
     
@@ -36,6 +37,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     name = "MessageViewSet"  
     filter_backends = [filters.SearchFilter]
     search_fields = ["message_body"]
+    permission_classes = [IsSenderOfMessage]
     
     
     
