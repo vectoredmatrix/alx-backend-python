@@ -31,10 +31,11 @@ def create_conversations(users, n=3):
     """Create fake conversations with random participants"""
     conversations = []
     for _ in range(n):
-        user = random.choice(users)
-        conv = Conversation.objects.create(participants_id=user)
+        conv = Conversation.objects.create()
+        conv.participants_id.set([random.choice(users)])  # ✅ fixed
         conversations.append(conv)
     return conversations
+
 
 
 def create_messages(users, conversations, n=10):
