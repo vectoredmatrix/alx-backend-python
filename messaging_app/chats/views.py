@@ -6,6 +6,7 @@ from .models import *
 from .serializers import *
 from .permissions import IsParticipantOfConversation , IsSenderOfMessage
 from .filters import MessageFilter
+from .pagination import LargeResultPagination
 
 # Create your views here.
 
@@ -38,6 +39,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ["message_body"]
     permission_classes = [IsSenderOfMessage]
+    pagination_class = LargeResultPagination
     
     
     
