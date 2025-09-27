@@ -1,12 +1,12 @@
 import django_filters
-from .models import Message
+from .models import Conversation
 
 
 class MessageFilter(django_filters.FilterSet):
     class Meta:
-        model = Message
+        model = Conversation
         fields = {
-            "sender_id" : ["exact"],
-            "sent_at":["range"]
+            "participants_id" : ["exact"],
+            "created_at":["range"]
         }
         

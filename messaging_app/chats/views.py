@@ -17,7 +17,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields =  ["particapant__first_name","participant__lanst_name"]
     parser_classes = [IsParticipantOfConversation , IsAuthenticated]
-    
+    filterset_class = [MessageFilter]
     
     
     def create(self, request, *args, **kwargs):
@@ -38,7 +38,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ["message_body"]
     permission_classes = [IsSenderOfMessage]
-    filterset_class = [MessageFilter]
+    
     
     
     
