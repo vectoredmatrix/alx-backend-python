@@ -81,7 +81,36 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    
+    #custom middle wares
+    "chats.middleware.RequestLoggingMiddleware"
+    
 ]
+
+
+
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "requests.log",  
+        },
+    },
+    "loggers": {
+        "chats.middleware": {   
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+}
+
 
 ROOT_URLCONF = 'messaging_app.urls'
 
@@ -99,6 +128,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = 'messaging_app.wsgi.application'
 
