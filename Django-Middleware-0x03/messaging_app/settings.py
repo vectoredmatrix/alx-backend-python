@@ -86,7 +86,8 @@ MIDDLEWARE = [
     #custom middle wares
     
     "chats.middleware.RequestLoggingMiddleware",
-     "chats.middleware.RestrictAccessByTimeMiddleware"
+     "chats.middleware.RestrictAccessByTimeMiddleware",
+      "chats.middleware.OffensiveLanguageMiddleware"
     
 ]
 
