@@ -84,6 +84,7 @@ MIDDLEWARE = [
     
     
     #custom middle wares
+    
     "chats.middleware.RequestLoggingMiddleware"
     
 ]
