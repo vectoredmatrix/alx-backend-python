@@ -73,6 +73,8 @@ SIMPLE_JWT = {
 }
 
 
+
+""" 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -91,6 +93,26 @@ MIDDLEWARE = [
       "chats.middleware.RolepermissionMiddleware",
     
 ]
+
+"""
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "chats.middleware.RequestLoggingMiddleware",            # log very early
+    "chats.middleware.RestrictAccessByTimeMiddleware",      # block early if needed
+    
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    
+    "chats.middleware.OffensiveLanguageMiddleware",         # needs auth/session
+    "chats.middleware.RolepermissionMiddleware",            # needs request.user
+    
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
 
 
 
