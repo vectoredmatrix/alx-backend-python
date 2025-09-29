@@ -75,22 +75,14 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    
-    # Custom
     "chats.middleware.RequestLoggingMiddleware",        
     "chats.middleware.RestrictAccessByTimeMiddleware",  
-
-    # Django core
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-
-    # Custom (require auth/session)
     "chats.middleware.RolepermissionMiddleware",
     "chats.middleware.OffensiveLanguageMiddleware",
-
-    # Django core
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
