@@ -11,3 +11,10 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     
     
+class Notification(models.Model):
+    new_message = models.BooleanField(default=False)
+    user = models.ForeignKey(User , on_delete=models.CASCADE)
+    message = models.ForeignKey(Message , on_delete=models.CASCADE)
+    
+    
+    
