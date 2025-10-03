@@ -31,7 +31,13 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-my_app = [ "celery" , "chats",'drf_yasg', 'django_filters']
+my_app = [ "celery" , 
+          "chats.app.ChatsConfig",  
+          "messaging.app.MessagingConfig",
+          'drf_yasg', 
+          'django_filters']
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
