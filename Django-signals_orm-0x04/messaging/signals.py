@@ -13,6 +13,7 @@ User = get_user_model()
 def notify_user(sender , instance , created , **kwargs):
     
     if created:
+        print(instance.sender.id)
         receiver = instance.receiver
         sender = instance.sender
         Notification.objects.create(

@@ -26,4 +26,6 @@ class MessageHistory(models.Model):
     edited = models.BooleanField(default=False) 
     message = models.ForeignKey(Message , on_delete=models.CASCADE, related_name="edits")
     old_content = models.TextField(max_length=5000 , blank=False)
+    edited_at = models.DateTimeField(auto_now=True)
+    edited_by = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
     
