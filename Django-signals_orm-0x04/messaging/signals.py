@@ -25,7 +25,7 @@ def notify_user(sender , instance , created , **kwargs):
         
 
 @receiver(pre_save , sender = Message)
-def Is_edited(sender , instance , **kwargs):
+def track_edited_message(sender , instance , **kwargs):
     if instance.pk:
         pk = instance.pk
         try:
