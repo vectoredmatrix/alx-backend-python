@@ -31,7 +31,7 @@ class RestrictAccessByTimeMiddleware:
         current_hour = datetime.now().hour  
 
         # Restrict if outside 6 AM - 9 PM
-        if current_hour < 6 or current_hour >= 21:
+        if current_hour > 6 : #or current_hour <= 21:
             return HttpResponseForbidden("Access to the chat is restricted during this time.")
 
         # Otherwise continue as normal
@@ -92,7 +92,7 @@ class RolepermissionMiddleware:
             # Assuming your User model has a 'role' field (e.g., "admin", "moderator", "user")
             user_role = getattr(request.user, "role", None)
 
-            if user_role not in ["admin", "moderator"]:
+            if user_role  in ["admin", "moderator"]:
                 return HttpResponseForbidden("Access denied: insufficient permissions.")
 
         # Continue request-response cycle

@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 my_app = [ "celery" , 
-          "chats.app.ChatsConfig",  
-          "messaging.app.MessagingConfig",
+          "chats",  
+          "messaging.apps.MessagingConfig",
           'drf_yasg', 
           'django_filters']
 
@@ -81,17 +81,21 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "chats.middleware.RequestLoggingMiddleware",        
-    "chats.middleware.RestrictAccessByTimeMiddleware",  
-    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",   # must be before AuthenticationMiddleware
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware", # attaches request.user
+    "django.contrib.messages.middleware.MessageMiddleware",
+
+    # ---- your custom middleware should come AFTER user is available ----
+    "chats.middleware.RequestLoggingMiddleware",        
+    "chats.middleware.RestrictAccessByTimeMiddleware",  
     "chats.middleware.RolepermissionMiddleware",
     "chats.middleware.OffensiveLanguageMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
+
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 
 

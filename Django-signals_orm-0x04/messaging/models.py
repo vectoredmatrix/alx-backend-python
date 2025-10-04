@@ -17,9 +17,13 @@ class Message(models.Model):
     
 class Notification(models.Model):
     new_message = models.BooleanField(default=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
-    from_ = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="user_new_message")
+    sent_by = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sent_by")
     message = models.ForeignKey(Message , on_delete=models.CASCADE)
     
-    
+  
+class MessageHistory(models.Model):
+    edited = models.BooleanField(default=False) 
+    message = models.ForeignKey(Message , on_delete=models.CASCADE, related_name="edits")
+    old_content = models.TextField(max_length=5000 , blank=False)
     
