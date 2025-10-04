@@ -11,9 +11,9 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 class EditedMessage(admin.ModelAdmin):
-    list_display = [  
+    list_display = ["edited_at" , "edited_by", 
                     "edited" , "old_content"]
     
 
 admin.site.register(Message , MessageAdmin)
-admin.site.register(MessageHistory , EditedMessage)
+admin.site.register(MessageHistory, EditedMessage)

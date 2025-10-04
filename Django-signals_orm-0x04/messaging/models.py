@@ -5,8 +5,8 @@ from django.conf import settings
 
 
 class Message(models.Model):
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sender")
-    receiver = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete= models.CASCADE , related_name="receiver")
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sent_messages")
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete= models.CASCADE , related_name="received_messages")
     content = models.TextField(max_length=5000 , blank=False)
     timestamp = models.DateTimeField(auto_now_add=True)
     
@@ -17,8 +17,8 @@ class Message(models.Model):
     
 class Notification(models.Model):
     new_message = models.BooleanField(default=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="user_new_message")
-    sent_by = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sent_by")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="notifications")
+    sent_by = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sent_notification")
     message = models.ForeignKey(Message , on_delete=models.CASCADE)
     
   
@@ -27,5 +27,5 @@ class MessageHistory(models.Model):
     message = models.ForeignKey(Message , on_delete=models.CASCADE, related_name="edits")
     old_content = models.TextField(max_length=5000 , blank=False)
     edited_at = models.DateTimeField(auto_now=True)
-    edited_by = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
+    edited_by = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="edited_histories")
     

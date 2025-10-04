@@ -15,5 +15,5 @@ class MessageSerial(ModelSerializer):
     def get_sender(self ,obj):
         return obj.sender.username
      
-    def get_reciever(self ,obj):
+    def get_receiver(self ,obj):
         return obj.receiver.username
