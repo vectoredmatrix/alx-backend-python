@@ -52,4 +52,13 @@ def track_edited_message(sender , instance , **kwargs):
 
 @receiver(post_delete , sender = User)
 def notify_user_before_account_deletion(sender , instance ,**kwargs ):
+    Message.objects.filter(sender=instance).delete()
+    Message.objects.filter(receiver=instance).delete()
+
+    Notification.objects.filter(user=instance).delete()
+    Notification.objects.filter(sent_by=instance).delete()
+
+    MessageHistory.objects.filter(message__sender=instance).delete()
+    MessageHistory.objects.filter(message__receiver=instance).delete()
+
     print(f"{instance.user} accoount has being deleted")
