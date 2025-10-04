@@ -61,4 +61,4 @@ def notify_user_before_account_deletion(sender , instance ,**kwargs ):
     MessageHistory.objects.filter(message__sender=instance).delete()
     MessageHistory.objects.filter(message__receiver=instance).delete()
 
-    print(f"{instance.user} accoount has being deleted")
+    print(f"{instance.username} accoount has being deleted")

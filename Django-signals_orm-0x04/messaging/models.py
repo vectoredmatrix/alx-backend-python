@@ -11,6 +11,14 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     
 
+    parent_message = models.ForeignKey(
+        "self",
+        on_delete=models.CASCADE, 
+        related_name="replies" ,
+        null= True , 
+        blank=True
+        )
+
     def __str__(self) -> str:
         return f"{self.sender.username} -> {self.receiver.username}"
     
