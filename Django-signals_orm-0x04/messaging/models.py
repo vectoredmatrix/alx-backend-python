@@ -1,12 +1,8 @@
 from django.db import models
 from django.conf import settings
 # Create your models here.
+from .managers import UnreadMessagesManager
 
-
-
-class UnreadMessagesManager(models.Manager):
-    def unread(self , request):
-        return self.filter(receiver= request , notifications__new_message = True)
 
 class Message(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sent_messages")
