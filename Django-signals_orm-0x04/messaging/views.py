@@ -10,6 +10,8 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
 
@@ -35,7 +37,9 @@ class messageView(ModelViewSet):
 )
         
         return queryset.distinct()
-        
+    @method_decorator(cache_page(60))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
         
     
     
@@ -44,10 +48,11 @@ class UnreadMessages(ModelViewSet):
     serializer_class = MessageSerial
     permission_classes = [IsAuthenticated]
 
+   
     def get_queryset(self):
         user = self.request.user
         unread = Message.unread.unread_for_user(user).only("sender__username" , "receiver__username","content" , "timestamp")
-        return unread    
+        return unread
     
        
    
