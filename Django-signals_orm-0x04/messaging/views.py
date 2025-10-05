@@ -24,12 +24,12 @@ class messageView(ModelViewSet):
     serializer_class = MessageSerial
     
     def get_queryset(self):
-        user = self.request.user
+        user = self.request.user #sender=request.user
         
         
         queryset = (
-                    Message.objects.filter(Q(sender=user) | Q(receiver=user))
-                    .select_related("sender", "receiver",  "parent_message")
+                    Message.objects.filter(sender=user )
+                    .select_related("sender","parent_message")
                     .prefetch_related("replies", "edits")
                     
 )
