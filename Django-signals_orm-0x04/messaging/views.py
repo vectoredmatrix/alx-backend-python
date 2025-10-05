@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
+
 
 
 
@@ -22,14 +24,17 @@ class messageView(ModelViewSet):
     serializer_class = MessageSerial
     
     def get_queryset(self):
-        pk = self.kwargs.get("pk")
+        user = self.request.user
         
-        try:
-            obj = Message.objects.filter(pk=pk).select_related("sender" , "receiver").prefetch_related("edits")
-        except Message.DoesNotExist:
-            return Message.objects.none()
-        else:
-            return obj
+        
+        queryset = (
+                    Message.objects
+                    .select_related("sender", "receiver",  "parent_message")
+                    .prefetch_related("replies", "edits")
+                    .filter(Q(sender=user) | Q(receiver=user))
+)
+        
+        return queryset.distinct()
         
         
         
