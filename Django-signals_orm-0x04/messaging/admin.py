@@ -6,7 +6,7 @@ from .models import Message ,MessageHistory
 
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display =["sender" , "receiver" , "content"]
+    list_display =["sender" , "receiver" , "content" , "parent_message"]
     
 
 

@@ -16,7 +16,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConvsersationSerial
     name = "ConversationViewset"
     filter_backends = [filters.SearchFilter]
-    search_fields =  ["particapant__first_name","participant__lanst_name"]
+    search_fields =  ["particapant__first_name","participant__last_name"]
     parser_classes = [IsParticipantOfConversation , IsAuthenticated]
     filterset_class = [MessageFilter]
     

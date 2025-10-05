@@ -21,6 +21,20 @@ class messageView(ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerial
     
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+        
+        try:
+            obj = Message.objects.filter(pk=pk).select_related("sender" , "receiver").prefetch_related("edits")
+        except Message.DoesNotExist:
+            return Message.objects.none()
+        else:
+            return obj
+        
+        
+        
+   
+
 
 
 class delete_user (ModelViewSet):
