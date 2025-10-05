@@ -28,10 +28,10 @@ class messageView(ModelViewSet):
         
         
         queryset = (
-                    Message.objects
+                    Message.objects.filter(Q(sender=user) | Q(receiver=user))
                     .select_related("sender", "receiver",  "parent_message")
                     .prefetch_related("replies", "edits")
-                    .filter(Q(sender=user) | Q(receiver=user))
+                    
 )
         
         return queryset.distinct()
