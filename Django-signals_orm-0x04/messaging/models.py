@@ -9,8 +9,8 @@ class Message(models.Model):
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete= models.CASCADE , related_name="received_messages")
     content = models.TextField(max_length=5000 , blank=False)
     timestamp = models.DateTimeField(auto_now_add=True)
-    
-    objects = UnreadMessagesManager()
+    objects = models.Manager()
+    unread = UnreadMessagesManager()
     
 
     parent_message = models.ForeignKey(

@@ -46,7 +46,7 @@ class UnreadMessages(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        unread = Message.objects.unread(user)
+        unread = Message.unread.unread_for_user(user)
         return unread    
     
        

@@ -16,7 +16,7 @@ class EditedMessage(admin.ModelAdmin):
                     "edited" , "old_content"]
 
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = [ "user" ,"new_message" ,"sent_by"]    
+    list_display = [ "user" ,"unread" ,"sent_by"]    
 
 admin.site.register(Message , MessageAdmin)
 admin.site.register(MessageHistory, EditedMessage)
