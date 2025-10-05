@@ -28,8 +28,8 @@ class messageView(ModelViewSet):
         
         
         queryset = (
-                    Message.objects.filter(sender=user )
-                    .select_related("sender","parent_message")
+                    Message.objects.filter(Q(sender=user) | Q(receiver = user),  )
+                    .select_related("sender", "receiver","parent_message")
                     .prefetch_related("replies", "edits")
                     
 )
