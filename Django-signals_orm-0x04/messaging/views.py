@@ -37,7 +37,19 @@ class messageView(ModelViewSet):
         return queryset.distinct()
         
         
-        
+    
+    
+class UnreadMessages(ModelViewSet):
+    
+    serializer_class = MessageSerial
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        unread = Message.objects.unread(user)
+        return unread    
+    
+       
    
 
 

@@ -1,14 +1,20 @@
 from django.db import models
 from django.conf import settings
 # Create your models here.
-from django.db.models import Q
 
+
+
+class UnreadMessagesManager(models.Manager):
+    def unread(self , request):
+        return self.filter(receiver= request , notifications__new_message = True)
 
 class Message(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sent_messages")
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete= models.CASCADE , related_name="received_messages")
     content = models.TextField(max_length=5000 , blank=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    
+    objects = UnreadMessagesManager()
     
 
     parent_message = models.ForeignKey(
@@ -24,10 +30,10 @@ class Message(models.Model):
     
     
 class Notification(models.Model):
-    new_message = models.BooleanField(default=False)
+    new_message = models.BooleanField(default=False , blank = False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="notifications")
     sent_by = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sent_notification")
-    message = models.ForeignKey(Message , on_delete=models.CASCADE)
+    message = models.ForeignKey(Message , on_delete=models.CASCADE ,related_name="notifications")
     
   
 class MessageHistory(models.Model):
