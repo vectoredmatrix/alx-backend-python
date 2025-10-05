@@ -46,7 +46,7 @@ class UnreadMessages(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        unread = Message.unread.unread_for_user(user)
+        unread = Message.unread.unread_for_user(user).only("sender__username" , "receiver__username","content" , "timestamp")
         return unread    
     
        
