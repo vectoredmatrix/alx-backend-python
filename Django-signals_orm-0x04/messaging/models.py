@@ -26,7 +26,7 @@ class Message(models.Model):
     
     
 class Notification(models.Model):
-    new_message = models.BooleanField(default=False , blank = False)
+    unread= models.BooleanField(default=False , blank = False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="notifications")
     sent_by = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE , related_name="sent_notification")
     message = models.ForeignKey(Message , on_delete=models.CASCADE ,related_name="notifications")

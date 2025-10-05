@@ -19,7 +19,7 @@ def notify_user(sender , instance , created , **kwargs):
         Notification.objects.create(
             user = receiver,
             sent_by = sender,
-            new_message = True,
+            unread= True,
             message = instance
         )
         print(f"{receiver.username} you have a new message from {sender.username}")
