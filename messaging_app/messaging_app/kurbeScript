@@ -11,7 +11,7 @@ echo "the below is the cluster info"
 minikube kubectl cluster-info
 
 echo "The below list are the running pods"
-
+# kubectl get pods
 minikube kubectl -- get pods --all-namespaces
 
 echo "The below are the running nodes"
